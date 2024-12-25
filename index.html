@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт для голосований</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Сайт для голосований</h1>
+            <nav>
+                <ul>
+                    <li><a href="#create-poll">Создать опрос</a></li>
+                    <li><a href="#vote">Голосовать</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section id="create-poll">
+        <h2>Создать опрос</h2>
+        <form id="poll-form">
+            <label for="question">Вопрос:</label>
+            <input type="text" id="question" required>
+            <label for="options">Варианты ответа (по одному на строку):</label>
+            <textarea id="options" required></textarea>
+            <button type="submit">Создать опрос</button>
+        </form>
+    </section>
+
+    <section id="vote">
+        <h2>Голосовать</h2>
+        <form id="vote-form">
+            <label for="poll-select">Выберите опрос:</label>
+            <select id="poll-select" required></select>
+            <div id="poll-options"></div>
+            <label for="phone-number">Номер телефона:</label>
+            <input type="tel" id="phone-number" required>
+        </form>
+        <div id="results"></div>
+    </section>
+    <script src="scripts.js"></script>
+</body>
+</html>
