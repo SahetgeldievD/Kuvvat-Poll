@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика опросов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Статистика опросов</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="statistics">
+        <h2>Выберите опрос для просмотра статистики</h2>
+        <label for="poll-select">Выберите опрос:</label>
+        <select id="poll-select">
+            <!-- Динамически заполняется из localStorage -->
+        </select>
+        <div id="poll-statistics">
+            <h3>Статистика</h3>
+            <div id="stats-results"></div>
+        </div>
+    </section>
+
+    <script>
+        // Получаем данные polls из localStorage
+        const polls = JSON.parse(localStorage.getItem('polls')) || [];
+        console.log(polls);
+
+        // Обновляем выпадающее меню с опросами
+        function updatePollSelect() {
+            const pollSelect = document.getElementById('poll-select');
+            pollSelect.innerHTML = '';
+            polls.forEach((poll, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = poll.question;
+                pollSelect.appendChild(option);
+            });
+            if (polls.length > 0) {
+                displayPollStatistics(0); // Показать статистику первого опроса по умолчанию
+            }
+        }
+
+        // Показываем статистику выбранного опроса
+        function displayPollStatistics(index) {
+            const statsResultsDiv = document.getElementById('stats-results');
+            statsResultsDiv.innerHTML = '';
+            const poll = polls[index];
+            const totalVotes = poll.votes.reduce((a, b) => a + b, 0);
+
+            const stats = poll.options.map((option, i) => ({
+                option,
+                votes: poll.votes[i],
+                percentage: totalVotes ? ((poll.votes[i] / totalVotes) * 100).toFixed(2) : 0
+            }));
+
+            stats.forEach(stat => {
+                const statDiv = document.createElement('div');
+                statDiv.textContent = `${stat.option}: ${stat.votes} голосов (${stat.percentage}%)`;
+                statsResultsDiv.appendChild(statDiv);
+            });
+
+            const totalDiv = document.createElement('div');
+            totalDiv.textContent = `Всего голосов: ${totalVotes}`;
+            statsResultsDiv.appendChild(totalDiv);
+
+            const votersDiv = document.createElement('div');
+            votersDiv.textContent = `Уникальных участников: ${poll.voters.length}`;
+            statsResultsDiv.appendChild(votersDiv);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pollSelect = document.getElementById('poll-select');
+            updatePollSelect();
+
+            pollSelect.addEventListener('change', function () {
+                const selectedIndex = parseInt(pollSelect.value, 10);
+                displayPollStatistics(selectedIndex);
+            });
+        });
+    </script>
+</body>
+</html>

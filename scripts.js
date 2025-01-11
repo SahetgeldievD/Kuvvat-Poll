@@ -1,6 +1,7 @@
 let polls = [];
 let selectedOptionIndex = -1;
 document.getElementById('create-poll').style.display = 'none';
+savePollsToLocalStorage();
 
 // Обновляем список опросов
 function updatePollSelect() {
@@ -121,8 +122,19 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       question: 'Кого вы любите больше? (тестовый вопрос)',
       options: ['Кошек', 'Собак', 'Не люблю животных'],
-      votes: [0, 0, 0],
-      voters: []
+      votes: [5, 7, 2],
+      voters: ['+1234567890', '+9876543210', '+1112223333', '+4445556666', '+7778889999', '+2223334444', '+5556667777', '+8889990000', '+0001112222', '+3334445555']
+    },
+    {
+      question: 'Какой ваш любимый цвет?',
+      options: ['Красный', 'Синий', 'Зелёный', 'Жёлтый', 'Чёрный'],
+      votes: [10, 15, 8, 5, 12],
+      voters: [
+        '+1234567891', '+9876543211', '+1112223334', '+4445556667', '+7778889998',
+        '+2223334445', '+5556667776', '+8889990001', '+0001112223', '+3334445556',
+        '+4445556668', '+5556667779', '+6667778880', '+7778889991', '+8889990002',
+        '+9990001113', '+0001112224', '+1112223335', '+2223334446', '+3334445557'
+      ]
     }
   ];
 
@@ -134,25 +146,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const pollIndex = document.getElementById('poll-select').value;
     const poll = polls[pollIndex];
     const phoneNumber = document.getElementById('phone-number').value;
-  
+
     if (!validatePhoneNumber(phoneNumber)) {
-      alert('Неправильный номер телефона!');
-      return;
+        alert('Неправильный номер телефона!');
+        return;
     }
-  
+
     if (poll.voters.includes(phoneNumber)) {
-      alert('Вы уже проголосовали!');
-      return;
+        alert('Вы уже проголосовали!');
+        return;
     }
-  
+
     if (selectedOptionIndex === -1) {
-      alert('Выберите вариант ответа!');
-      return;
+        alert('Выберите вариант ответа!');
+        return;
     }
-  
+
     poll.votes[selectedOptionIndex]++;
     poll.voters.push(phoneNumber);
     poll.voted = true;
+    savePollsToLocalStorage();
     showResults(pollIndex);
     updatePollOptions(pollIndex);
     alert('Ваш голос учтен!');
@@ -171,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     polls.push(poll);
+    savePollsToLocalStorage();
     updatePollSelect();
 
     alert('Опрос создан!');
@@ -181,6 +195,11 @@ document.addEventListener('DOMContentLoaded', function() {
     showPollOptions(pollSelect.value);
   });
 });
+
+function savePollsToLocalStorage() {
+  localStorage.setItem('polls', JSON.stringify(polls));
+  console.log('Polls saved to localStorage');
+}
 
 // Функция для проверки номера телефона
 function validatePhoneNumber(phoneNumber) {
