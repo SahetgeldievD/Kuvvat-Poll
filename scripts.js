@@ -3,7 +3,6 @@ let selectedOptionIndex = -1;
 document.getElementById('create-poll').style.display = 'none';
 savePollsToLocalStorage();
 
-// Обновляем список опросов
 function updatePollSelect() {
   const pollSelect = document.getElementById('poll-select');
   pollSelect.innerHTML = '';
@@ -18,7 +17,6 @@ function updatePollSelect() {
   }
 }
 
-// Показываем варианты опроса
 function showPollOptions(index) {
   const pollOptionsDiv = document.getElementById('poll-options');
   pollOptionsDiv.innerHTML = '';
@@ -54,7 +52,6 @@ function showPollOptions(index) {
   pollOptionsDiv.appendChild(buttonsContainer);
 }
 
-// Обновляем варианты опроса после голосования
 function updatePollOptions(index) {
   const pollOptionsDiv = document.getElementById('poll-options');
   pollOptionsDiv.innerHTML = '';
@@ -71,15 +68,14 @@ function updatePollOptions(index) {
   pollOptionsDiv.appendChild(buttonsContainer);
 }
 
-// Событие изменения номера телефона
 const phoneNumberInput = document.getElementById('phone-number');
 phoneNumberInput.addEventListener('input', function() {
   const pollIndex = document.getElementById('poll-select').value;
   const poll = polls[pollIndex];
   const phoneNumber = document.getElementById('phone-number').value;
   if (!poll.voters.includes(phoneNumber)) {
-    poll.voted = false; // Обновляем поле voted
-    selectedOptionIndex = -1; // Обнуляем значение selectedOptionIndex
+    poll.voted = false;
+    selectedOptionIndex = -1;
     const buttons = document.getElementById('poll-options').querySelectorAll('button');
     buttons.forEach((button, i) => {
       button.disabled = false;
@@ -91,7 +87,6 @@ phoneNumberInput.addEventListener('input', function() {
   }
 });
 
-// Показываем результаты опроса
 function showResults(index) {
   const resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
@@ -114,13 +109,10 @@ function showResults(index) {
 document.addEventListener('DOMContentLoaded', function() {
   const pollForm = document.getElementById('poll-form');
   const pollSelect = document.getElementById('poll-select');
-  const pollOptionsDiv = document.getElementById('poll-options');
-  const resultsDiv = document.getElementById('results');
 
-  // Инициализируем данные
   polls = [
     {
-      question: 'Кого вы любите больше? (тестовый вопрос)',
+      question: 'Кого вы любите больше?',
       options: ['Кошек', 'Собак', 'Не люблю животных'],
       votes: [5, 7, 2],
       voters: ['+1234567890', '+9876543210', '+1112223333', '+4445556666', '+7778889999', '+2223334444', '+5556667777', '+8889990000', '+0001112222', '+3334445555']
@@ -128,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       question: 'Какой ваш любимый цвет?',
       options: ['Красный', 'Синий', 'Зелёный', 'Жёлтый', 'Чёрный'],
-      votes: [10, 15, 8, 5, 12],
+      votes: [1, 5, 3, 4, 7],
       voters: [
         '+1234567891', '+9876543211', '+1112223334', '+4445556667', '+7778889998',
         '+2223334445', '+5556667776', '+8889990001', '+0001112223', '+3334445556',
@@ -140,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   updatePollSelect();
 
-  // Обработчик события повторного голосования
   document.getElementById('vote-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const pollIndex = document.getElementById('poll-select').value;
@@ -201,7 +192,10 @@ function savePollsToLocalStorage() {
   console.log('Polls saved to localStorage');
 }
 
-// Функция для проверки номера телефона
+document.getElementById('stats-link').addEventListener('click', () => {
+  window.location.href = `analytics.html?polls=${encodeURIComponent(JSON.stringify(polls))}`;
+});
+
 function validatePhoneNumber(phoneNumber) {
   const phoneRegex = /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
   return phoneRegex.test(phoneNumber);
@@ -213,7 +207,6 @@ const createPollBlock = document.getElementById('create-poll');
 const voteBlock = document.getElementById('vote');
 
 
-// Добавляем обработчики события клика на ссылки
 createPollLink.addEventListener('click', function() {
 if (createPollBlock.style.display === 'none') {
     createPollBlock.style.display = 'block';

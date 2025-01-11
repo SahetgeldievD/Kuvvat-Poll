@@ -109,3 +109,19 @@ button:hover {
 .poll-option-button:disabled:hover {
   background-color: #ccc;
 }
+
+#poll-chart {
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+#poll-line-chart {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+#additional-stats {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #555;
+}

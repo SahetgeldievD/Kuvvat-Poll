@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Статистика опросов</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,21 +22,30 @@
     <section id="statistics">
         <h2>Выберите опрос для просмотра статистики</h2>
         <label for="poll-select">Выберите опрос:</label>
-        <select id="poll-select">
-            <!-- Динамически заполняется из localStorage -->
-        </select>
+        <select id="poll-select"></select>
         <div id="poll-statistics">
             <h3>Статистика</h3>
             <div id="stats-results"></div>
+            <div id="additional-stats"></div>
+            <canvas id="poll-chart" width="300" height="300"></canvas>
+            <canvas id="poll-line-chart" width="400" height="200"></canvas>
+        </div>
+        <div id="export-import">
+            <h3>Управление данными</h3>
+            <button id="export-btn">Экспорт вопроса в JSON</button>
+            <label for="import-file" class="import-label">Импорт из JSON для просмотра статистики:</label>
+            <input type="file" id="import-file" accept=".json">
         </div>
     </section>
+   
 
     <script>
-        // Получаем данные polls из localStorage
-        const polls = JSON.parse(localStorage.getItem('polls')) || [];
-        console.log(polls);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let polls = JSON.parse(decodeURIComponent(urlParams.get('polls'))) || [];
+        let pieChart = null;
+        let lineChart = null;
 
-        // Обновляем выпадающее меню с опросами
         function updatePollSelect() {
             const pollSelect = document.getElementById('poll-select');
             pollSelect.innerHTML = '';
@@ -46,13 +56,14 @@
                 pollSelect.appendChild(option);
             });
             if (polls.length > 0) {
-                displayPollStatistics(0); // Показать статистику первого опроса по умолчанию
+                displayPollStatistics(0); 
             }
         }
 
-        // Показываем статистику выбранного опроса
         function displayPollStatistics(index) {
             const statsResultsDiv = document.getElementById('stats-results');
+            const additionalStatsDiv = document.getElementById('additional-stats');
+            additionalStatsDiv.innerHTML = '';
             statsResultsDiv.innerHTML = '';
             const poll = polls[index];
             const totalVotes = poll.votes.reduce((a, b) => a + b, 0);
@@ -73,10 +84,114 @@
             totalDiv.textContent = `Всего голосов: ${totalVotes}`;
             statsResultsDiv.appendChild(totalDiv);
 
-            const votersDiv = document.createElement('div');
-            votersDiv.textContent = `Уникальных участников: ${poll.voters.length}`;
-            statsResultsDiv.appendChild(votersDiv);
+            const mostPopular = stats.reduce((max, stat) => (stat.votes > max.votes ? stat : max), stats[0]);
+            const leastPopular = stats.reduce((min, stat) => (stat.votes < min.votes ? stat : min), stats[0]);
+
+            const mostPopularDiv = document.createElement('div');
+            mostPopularDiv.textContent = `Самый популярный вариант: ${mostPopular.option} (${mostPopular.votes} голосов, ${mostPopular.percentage}%)`;
+            additionalStatsDiv.appendChild(mostPopularDiv);
+
+            const leastPopularDiv = document.createElement('div');
+            leastPopularDiv.textContent = `Самый непопулярный вариант: ${leastPopular.option} (${leastPopular.votes} голосов, ${leastPopular.percentage}%)`;
+            additionalStatsDiv.appendChild(leastPopularDiv);
+
+            if (pieChart) {
+                pieChart.destroy();
+            }
+
+            const ctx = document.getElementById('poll-chart').getContext('2d');
+            pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: poll.options,
+                    datasets: [{
+                        data: poll.votes,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffcd56', '#4bc0c0'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const percentage = (tooltipItem.raw / totalVotes * 100).toFixed(2);
+                                    return `${tooltipItem.label}: ${tooltipItem.raw} голосов (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (lineChart) {
+                lineChart.destroy();
+            }
+
+            const lineChartCtx = document.getElementById('poll-line-chart').getContext('2d');
+            lineChart = new Chart(lineChartCtx, {
+                type: 'line',
+                data: {
+                    labels: poll.options,
+                    datasets: [{
+                        label: 'Количество голосов',
+                        data: poll.votes,
+                        borderColor: '#ff6384',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { beginAtZero: true },
+                    }
+                }
+            });
         }
+
+        document.getElementById('export-btn').addEventListener('click', () => {
+            const pollSelect = document.getElementById('poll-select');
+            const selectedIndex = parseInt(pollSelect.value, 10);
+            const selectedPoll = polls[selectedIndex];
+
+            const jsonData = JSON.stringify(selectedPoll, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `poll_${selectedIndex + 1}.json`;
+            a.click();
+
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('import-file').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const importedPoll = JSON.parse(e.target.result);
+
+                        if (importedPoll.question && importedPoll.options && importedPoll.votes) {
+                            polls.push(importedPoll);
+                            updatePollSelect();
+                            alert('Опрос успешно импортирован!');
+                        } else {
+                            alert('Неверный формат файла.');
+                        }
+                    } catch (error) {
+                        alert('Ошибка при чтении файла.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const pollSelect = document.getElementById('poll-select');
