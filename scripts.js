@@ -193,8 +193,15 @@ function savePollsToLocalStorage() {
 }
 
 document.getElementById('stats-link').addEventListener('click', () => {
-  window.location.href = `analytics.html?polls=${encodeURIComponent(JSON.stringify(polls))}`;
+  const pollsWithoutVoters = polls.map(({ question, options, votes }) => ({
+    question,
+    options,
+    votes
+  }));
+
+  window.location.href = `analytics.html?polls=${encodeURIComponent(JSON.stringify(pollsWithoutVoters))}`;
 });
+
 
 function validatePhoneNumber(phoneNumber) {
   const phoneRegex = /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
