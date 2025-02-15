@@ -1,0 +1,415 @@
+<html>
+	<head>
+		<title>Who Wants To Be A Millionaire</title>
+		
+		<link rel="shortcut icon" href="Images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="Images/favicon.ico" type="image/x-icon">
+		
+		<link rel="stylesheet" type="text/css" href="Styles/reset.css">
+		<link rel="stylesheet" type="text/css" href="Styles/bodyStyles.css">
+		<link rel="stylesheet" type="text/css" href="Styles/divStyles.css">
+		<link rel="stylesheet" type="text/css" href="Styles/pStyles.css">
+		<link rel="stylesheet" type="text/css" href="Styles/imgStyles.css">
+		<link rel="stylesheet" type="text/css" href="Styles/tableStyles.css">
+		
+		<script type="text/javascript" src="Scripts/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="Scripts/jquery.3d.js"></script>
+		<script type="text/javascript" src="Scripts/accounting.js"></script>
+		<script type="text/javascript" src="Scripts/Variables.js"></script>
+		<script type="text/javascript" src="Scripts/CameraControl.js"></script>
+		<script type="text/javascript" src="Scripts/AudioControl.js"></script>
+		<script type="text/javascript" src="Scripts/FastestFingerControl.js"></script>
+		<script type="text/javascript" src="Scripts/GeneralControl.js"></script>
+		<script type="text/javascript" src="Scripts/QuestionAndAnswerControl.js"></script>
+		<script type="text/javascript" src="Scripts/WinningsControl.js"></script>
+		<script type="text/javascript" src="Scripts/MoneyTreeControl.js"></script>
+		<script type="text/javascript" src="Scripts/LifelineControl.js"></script>
+		<script type="text/javascript" src="Scripts/ContestantsControl.js"></script>
+		<script type="text/javascript" src="Scripts/KeyboardController.js"></script>		
+		<script type="text/javascript" src="Scripts/Init.js"></script>
+	</head>
+	<body>
+		<div class="stageContainerDiv">
+			<video id="video" width="1920" height="1080" autoplay></video>
+			<!-- Stage Background Div -->
+			<div class="stageBackgroundDiv">
+				<img src="Images/Millionaire_Background.png" id="stageBackgroundImg" style="opacity:0;-moz-opacity:0;-webkit-opacity:0;"/>
+			</div>
+			
+			<!-- Question Strap Div -->
+			<div class="questionStrapDiv">
+				<img src="Images/Large_Strap_Gradient.png" />
+				<table class="questionTable">
+					<tr>
+						<td class="questionTd">
+							A sample question will go here...
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- Answer Straps A and B Div -->
+			<div class="answerStrapDiv" style="bottom:127px;" >
+				<div class="leftAnswerDiv" id="answerA" >
+					<img src="Images/Normal_Answer_Fill.png" />
+					<img src="Images/Final_Answer_Fill.png" class="finalImg" />
+					<img src="Images/Correct_Answer_Fill.png" class="correctImg" />
+					<img src="Images/orange_diagonal.png" class="diagonalImg"/>
+					<p class="letterP">A:</p>
+					<p class="answerP">Answer for A Goes Here...</p>
+					<div class="ataPercentStrapDiv">
+						<img src="Images/ata_percent_strap.png" />
+						<p class="ataPercentStrapP" id="ataPercentStrapA">100%</p>
+					</div>
+				</div>
+				<div class="rightAnswerDiv" id="answerB">
+					<img src="Images/Normal_Answer_Fill.png" />
+					<img src="Images/Final_Answer_Fill.png" class="finalImg" />
+					<img src="Images/Correct_Answer_Fill.png" class="correctImg" />
+					<img src="Images/orange_diagonal.png" class="diagonalImg"/>
+					<p class="letterP">B:</p>
+					<p class="answerP">Answer for B Goes Here...</p>
+					<div class="ataPercentStrapDiv">
+						<img src="Images/ata_percent_strap.png" />
+						<p class="ataPercentStrapP" id="ataPercentStrapB">100%</p>
+					</div>
+				</div>
+				<img src="Images/Full_Answer_Strap_Gradient.png" />
+			</div>
+			
+			<!-- Answer Straps C and D Div -->
+			<div class="answerStrapDiv" style="bottom:32px;" >
+				<div class="leftAnswerDiv" id="answerC" >
+					<img src="Images/Normal_Answer_Fill.png" />
+					<img src="Images/Final_Answer_Fill.png" class="finalImg" />
+					<img src="Images/Correct_Answer_Fill.png" class="correctImg" />
+					<img src="Images/orange_diagonal.png" class="diagonalImg"/>
+					<p class="letterP">C:</p>
+					<p class="answerP">Answer for C Goes Here...</p>
+					<div class="ataPercentStrapDiv">
+						<img src="Images/ata_percent_strap.png" />
+						<p class="ataPercentStrapP" id="ataPercentStrapC">100%</p>
+					</div>
+				</div>
+				<div class="rightAnswerDiv" id="answerD">
+					<img src="Images/Normal_Answer_Fill.png" />
+					<img src="Images/Final_Answer_Fill.png" class="finalImg" />
+					<img src="Images/Correct_Answer_Fill.png" class="correctImg" />
+					<img src="Images/orange_diagonal.png" class="diagonalImg"/>
+					<p class="letterP">D:</p>
+					<p class="answerP">Answer for D Goes Here...</p>
+					<div class="ataPercentStrapDiv">
+						<img src="Images/ata_percent_strap.png" />
+						<p class="ataPercentStrapP" id="ataPercentStrapD">100%</p>
+					</div>
+				</div>
+				<img src="Images/Full_Answer_Strap_Gradient.png" />
+			</div>
+			
+			<!-- Answer Straps Life Line Centered Div -->
+			<div class="answerStrapLifeLineCenterDiv">
+				<div class="answerStrapLifeLineCenterContainerDiv">
+					<img src="Images/lifeline_glow_ring.png" class="lifelineCenterGlowImg" />
+					<img src="Images/stq.png" class="lifelineCenterImg" id="stqLifeLineCenterImg"/>
+				</div>
+			</div>
+			
+			<!-- Win Strap Div -->
+			<div class="winStrapDiv">
+				<img src="Images/winnings_glow.png" style="top:0px;bottom:0px;left:500px;"/>
+				<img src="Images/winnings_glow.png" style="top:0px;bottom:0px;right:500px;"/>
+				<p class="winningsP">$250,000</p>
+			</div>
+			
+			<!-- Fastest Finger Contestants Div -->
+			<div class="fastestFingerContestantsDiv">
+				<div class="fastestContestantDiv" id="fastestContestant1" style="top:-5px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant2" style="top:81px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant3" style="top:167px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant4" style="top:253px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant5" style="top:339px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant6" style="top:426px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant7" style="top:512px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant8" style="top:598px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant9" style="top:684px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+				<div class="fastestContestantDiv" id="fastestContestant10" style="top:770px;">
+					<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg"/>
+					<img src="Images/orange_diagonal.png" class="fastestFingerLeftGlowImg" />
+					<img src="Images/orange_diagonal.png" class="fastestFingerRightGlowImg" />
+					<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:0;-mz-opacity:0;-webkit-opacity:0;"/>
+					<p class="fastestContestantNameP">Contestant Name Here...</p>
+					<p class="fastestContestantTimeP">20.00s</p>
+					<img src="Images/fastest_time_strap_gradient.png" />
+				</div>
+			</div>
+			
+			<!-- Fastest Finger Winner Div -->
+			<div class="fastestContestantDiv" id="fastestContestant" style="bottom:113px;opacity:0;-moz-opacity:0;-webkit-opacity:0;left:0px;right:0px;">
+				<img src="Images/fastest_time_strap_fast_fill.png" class="fastestTimeCorrectFillImg" style="opacity:1;-mz-opacity:1;-webkit-opacity:1;"/>
+				<img src="Images/white_diagonal.png" class="fastestFingerLeftGlowWhiteImg" style="opacity:1;-mz-opacity:1;-webkit-opacity:1;"/>
+				<img src="Images/white_diagonal.png" class="fastestFingerRightGlowWhiteImg" style="opacity:1;-mz-opacity:1;-webkit-opacity:1;"/>
+				<p class="fastestContestantNameP">Contestant Name Here...</p>
+				<p class="fastestContestantTimeP" style="color:white;">20.00s</p>
+				<img src="Images/fastest_time_strap_gradient.png" />
+			</div>
+			
+			<!-- Contestant Name Strap Div -->
+			<div class="contestantNameAndLocationDiv">
+				<p class="contestantNameP">
+					UNNAMED PLAYER
+				</p>
+				<p class="contestantLocationP">
+					UNNAMED LOCATION
+				</p>
+			</div>
+						
+			<!-- Fastest Finger Tree Order Div -->
+			<div class="fastestFingerRevealOrderDiv">
+				<img src="Images/tree_seperator.png" />
+				<div class="fastestFingerTreeQuestionDiv">
+					<p class="fastestFingerTreeQuestionP">The question for fastest finger will go here</p>
+				</div>
+				<div class="fastestFingerTreeAnswerDiv" style="bottom:370px;" id="fastestAnswerOrder1">
+					<img src="Images/orange_diagonal.png" class="fastestTreeAnswerDiagonalImg" />
+					<p class="fastestTreeLetterP">?:</p>
+					<p class="fastestTreeAnswerP">Answer goes here...</p>
+					<img src="Images/fastest_tree_strap.png" />
+				</div>
+				<div class="fastestFingerTreeAnswerDiv" style="bottom:275px;" id="fastestAnswerOrder2">
+					<img src="Images/orange_diagonal.png" class="fastestTreeAnswerDiagonalImg" />
+					<p class="fastestTreeLetterP">?:</p>
+					<p class="fastestTreeAnswerP">Answer goes here...</p>
+					<img src="Images/fastest_tree_strap.png" />
+				</div>
+				<div class="fastestFingerTreeAnswerDiv" style="bottom:180px;" id="fastestAnswerOrder3">
+					<img src="Images/orange_diagonal.png" class="fastestTreeAnswerDiagonalImg" />
+					<p class="fastestTreeLetterP">?:</p>
+					<p class="fastestTreeAnswerP">Answer goes here...</p>
+					<img src="Images/fastest_tree_strap.png" />
+				</div>
+				<div class="fastestFingerTreeAnswerDiv" style="bottom:85px;" id="fastestAnswerOrder4">
+					<img src="Images/orange_diagonal.png" class="fastestTreeAnswerDiagonalImg" />
+					<p class="fastestTreeLetterP">?:</p>
+					<p class="fastestTreeAnswerP">Answer goes here...</p>
+					<img src="Images/fastest_tree_strap.png" />
+				</div>
+			</div>
+			
+			
+			
+			<!-- Money Tree Div -->
+			<div class="moneyTreeDiv">
+				<div class="lifelineTreeHolderDiv" style="top:93px;left:50px;">
+					<div class="lifelineTreeDiv ffLifeLine">
+						<img src="Images/5050.png" class="lifelineTreeImg"/>
+						<img src="Images/5050_yellow.png" class="lifelineYellowTreeImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedImg"/>
+					</div>
+				</div>
+				<div class="lifelineTreeHolderDiv pafLifeLine" style="top:93px;left:212px;">
+					<div class="lifelineTreeDiv">
+						<img src="Images/paf.png" class="lifelineTreeImg"/>
+						<img src="Images/paf_yellow.png" class="lifelineYellowTreeImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedImg"/>
+					</div>
+				</div>
+				<div class="lifelineTreeHolderDiv ataLifeLine" style="top:93px;left:374px;">
+					<div class="lifelineTreeDiv">
+						<img src="Images/ata.png" class="lifelineTreeImg"/>
+						<img src="Images/ata_yellow.png" class="lifelineYellowTreeImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedImg"/>
+					</div>
+				</div>
+				<div class="lifelineTreeHolderDiv stqLifeLine" style="top:93px;left:920px;">
+					<div class="lifelineTreeDiv">
+						<img src="Images/stq.png" class="lifelineTreeImg"/>
+						<img src="Images/stq_yellow.png" class="lifelineYellowTreeImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedImg"/>
+					</div>
+				</div>
+
+				<table class="moneyTreeTable">
+					
+				</table>
+				<img src="Images/tree_seperator.png" />
+			</div>
+			
+			<!-- Life Lines Left Strap -->
+			<div class="lifeLinesLeftStrapDiv">
+				<div class="lifelineStrapHolderDiv ffStrapLifeLine" style="top:0px;bottom:0px;left:400px;">
+					<div class="lifeLineStrapDiv">
+						<img src="Images/5050.png" class="lifelineStrapImg"/>
+						<img src="Images/5050_yellow.png" class="lifelineYellowStrapImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedStrapImg"/>
+					</div>
+				</div>
+				<div class="lifelineStrapHolderDiv pafStrapLifeLine" style="top:0px;bottom:0px;left:745px;">
+					<div class="lifeLineStrapDiv">
+						<img src="Images/paf.png" class="lifelineStrapImg"/>
+						<img src="Images/paf_yellow.png" class="lifelineYellowStrapImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedStrapImg"/>
+					</div>
+				</div>
+				<div class="lifelineStrapHolderDiv ataStrapLifeLine" style="top:0px;bottom:0px;left:1090px;">
+					<div class="lifeLineStrapDiv">
+						<img src="Images/ata.png" class="lifelineStrapImg"/>
+						<img src="Images/ata_yellow.png" class="lifelineYellowStrapImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedStrapImg"/>
+					</div>
+				</div>
+				<div class="lifelineStrapHolderDiv stqStrapLifeLine" style="top:0px;bottom:0px;left:1870px;">
+					<div class="lifeLineStrapDiv">
+						<img src="Images/stq.png" class="lifelineStrapImg"/>
+						<img src="Images/stq_yellow.png" class="lifelineYellowStrapImg"/>
+						<img src="Images/lifeline_used.png" class="lifelineUsedStrapImg"/>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Ask The Audience Graph Div -->
+			<div class="ataGraphDiv">
+				<div class="ataGraphBarDiv" id="graphBarA" style="left:25px;"></div>
+				<div class="ataGraphBarDiv" id="graphBarB" style="left:105px;"></div>
+				<div class="ataGraphBarDiv" id="graphBarC" style="left:185px;"></div>
+				<div class="ataGraphBarDiv" id="graphBarD" style="left:265px;"></div>
+				<div class="ataGraphPercentDiv" id="graphPercentA" style="left:-7px;"></div>
+				<div class="ataGraphPercentDiv" id="graphPercentB" style="left:73px;"></div>
+				<div class="ataGraphPercentDiv" id="graphPercentC" style="left:153px;"></div>
+				<div class="ataGraphPercentDiv" id="graphPercentD" style="left:233px;"></div>
+			</div>
+			
+			<!-- Phone a Friend Clock Div -->
+			<div class="pafClockDiv">
+				<img src="Images/clock_ring_drained.png" />
+				<div style="width:200px;height:400px;left:0px;top:0px;bottom:0px;overflow:hidden;">
+					<img src="Images/left_half_clock_ring.png" style="top:0px;bottom:0px;" id="pafLeftRingImg"/>
+				</div>
+				<div style="width:200px;height:400px;right:0px;top:0px;bottom:0px;overflow:hidden;">
+					<img src="Images/right_half_clock_ring.png" style="top:0px;bottom:0px;left:-200px;" id="pafRightRingImg"/>
+				</div>
+				<div class="pafClockTimeDiv">30</div>
+			</div>
+			
+			<!-- Millionaire Winner Title Div -->
+			<div class="millionaireWinnerTitleDiv">
+				<img src="Images/Large_TPW_Strap_Background.png" style="top:39px;"/>
+				<img src="Images/Large_TPW_Strap_Gradient.png" style="top:39px;"/>
+				<div class="millionaireWinnerNameDiv">UNNAMED PLAYER</div>
+				<div class="millionaireWinnerDiv">MILLIONAIRE</div>
+			</div>
+			
+			<!-- Total Prize Money Div -->
+			<div class="totalPrizeMoneyDiv">
+				<img src="Images/Large_Win_Strap_Background.png" style="top:135px;"/>
+				<img src="Images/Large_Win_Strap_Gradient.png" style="top:135px;"/>
+				<img src="Images/winnings_glow.png" style="bottom:112px;left:500px;"/>
+				<img src="Images/winnings_glow.png" style="bottom:112px;right:500px;"/>
+				<div class="totalPrizeDiv">TOTAL PRIZE MONEY</div>
+				<div class="totalPrizeMoneyWonDiv">$0</div>
+			</div>
+			
+			<!-- Current Level Strap Div-->
+			<div class="currentLevelStrapDiv">
+				<img src="Images/small_side_strap.png" />
+				<img src="Images/small_side_strap_gold.png" class="sideStrapGoldImg"/>
+				<div class="currentLevelStrapAmountDiv">
+					$250,000
+				</div>
+			</div>
+			
+			<div class="logoContainerDiv">
+				<img src="Images/logo_background.png" />
+				<div class="logoDiv">
+					<img src="Images/logo.png" />
+				</div>
+			</div>
+			
+			<!-- 4:3 Overlay Div -->
+			<div class="stageOverlayDiv">
+				<img src="Images/4_by_3_overlay.png" id="stageOverlayImg" style="top:0px;bottom:0px;">
+			</div>
+		</div>
+	</body>
+</html>

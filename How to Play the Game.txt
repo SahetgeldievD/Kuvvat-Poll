@@ -1,0 +1,97 @@
+/*************************************************/
+	General Setup
+
+	When using this application do not hold down on keys on the keyboard or things will go wacky fast! Single quick firm key presses should be sufficient.
+	
+	There is one file whose contents you can carefully make changes to in the scripts folder called Variables.js. The top most section contains initialization variables such as which life lines have already been used, a static contestants name and location and what question level to start on. BE CAREFUL when editing these values or the application may not work.
+	
+	To turn off a life line that has already been used change its value to "true" instead of "false". If switch the question is used, you will set its value to "false" for both "IsSTQLifelineUsed" and "IsSTQAvailableFromTheStart".
+	
+	There are two ways to obtain questions for this game. 
+	
+		1) Just like the Flash game version you will have 2 static XML files located in the Questions folder, one for regular questions and one for switching the questions out with the "switch the question" lifeline.
+		
+		2) This is one of the areas that having web development experience comes in handy. The method named "getAllQuestionsForGame" located inside the Init.js file under the scripts folder by default pulls questions from a static location. There is a commented out section of code that is pre-defined if you know how to make server side calls to a database or some other data source to obtain questions. Once you obtain the questions, you then map them to a new "QuestionAndAnswer()" object correctly. This method makes two calls, one for regular questions and one for switch questions and places them into the correct data arrays.
+/*************************************************/
+/*************************************************/
+	Key Mappings / How To Use
+	
+	The fastest way to learn how to operate the controller is to play around with it. DO NOT PRESS THE KEYS TO FAST CONSECUTIVELY OR YOU MAY GET THE ANIMATIONS OUT OF ORDER. The following keys are mapped as follows:
+	
+	A - This key is used for all things that involve "Ask The Audience" from animating the voting sequence to pulsing the lifeline on the money tree.
+		* When a question is active and all answers are revealed, press the key repeatedly for each animation until the voting graph leaves the screen.
+		** If the money tree is showing and the lifeline hasn't been used yet, press once to pulse the lifeline on the money tree.
+	
+	C - This key is used for going into and out of a commercial break. The key also "hides/shows" the Millionaire logo.
+		* When there are no graphics being displayed on the screen press this key to go into and come out of a commercial break. The logo will fill the screen when a break is in progress. Also after the intial load of the app this button plays a game intro sound only once until you end the game for
+		  the day using the "G" key.
+	
+	E - This key plays the explain rules sound. The explain rules sound loops about 4 times before stopping.
+		* If the explain rules sound cue stop playing press this key to start a new instance or simply replace the cue with a longer version if you have one.
+	
+	F - This key is used for all things that involve "Fifty-Fifty" from animating the removing of two answers to pulsing the lifeline on the money tree.
+		* When a question is active and all answers are revealed, press this key to remove two random incorrect answers.
+		** If the money tree is showing and the lifeline hasn't been used yet, press once to pulse the lifeline on the money tree.
+		
+	G - This key is used to play the time up sound followed by the closing theme. It also resets certain animations back to a beginning default as if the game was resumed later.
+		* When there are no graphics being displayed, press this key to "pause" the game and resume it at a later time.
+	
+	L - This key is used to show / hide what lifelines are left when a question is in progress.
+		* When a question is active and all answers are revealed, press this key to show or hide the lifeline remaining for use.
+	
+	M - This key is used to show what a contestant is playing for in the upper right corner of the screen.
+		* When a question is active and all answers are revealed, press this key to show or hide what the contestant is playing for. This aniation will disappear automatically 
+		  the moment an answer is revealed.
+	
+	N - This key is used to show / hide the contestant name and location.
+		* When no other graphics are showing on the screen press the key to show or hide the contestants name and location info.
+	
+	P - This key is used for all things that involve "Phone a friend" from animating the phone calling sequence to pulsing the lifeline on the money tree.
+		* When a question is active and all answers are revealed, press this key repeatedly to animate the phone calling sequence. You may end the clock early by using this key as well.
+		** If the money tree is showing and the lifeline hasn't been used yet, press once to pulse the lifeline on the money tree.
+	
+	Q - This key is used for playing the question resume sound after returning from a commercial break.
+		* When no graphics (not counting the money tree) are showing press this key to play the question resume sound.
+	
+	S - This key is used for all things that involve "Switch the Question" from animating the question to new question sequence to pulsing the lifeline on the money tree.
+		* When a question is active and all answers are revealed, press this key repeatedly to animate the switch the question sequence. This key is used up to the moment all new answers are revealed. DO NOT USE THE RIGHT ARROW KEY TO FINISH THIS SEQUENCE OR THE ANIMATIONS WILL BREAK.
+		** If the money tree is showing and the lifeline hasn't been used yet and is available, press once to pulse the lifeline on the money tree.
+		*** If the money is showing and the lifeline has not been unlocked yet press this key three times. The first press sets the diamonds, the second press slides it into view and the third press pulses it.
+	
+	U - This key is used to undo a final answer and to play a new instance of the current background cue during a question if the previous sound stops. If the sound stops press the key to start a new instance or simply replace the cue with a longer version if you have one.
+		* After final answer has been locked in you may press this key to undo the final answer (though technically it was finaled :])
+		** If all answers have been revealed and the background music stopped playing while thinking about the question use this same key to restart that sound. This can be overcome by replacing the cues with longer versions of you own.
+	
+	W - This key is used to animate the walk away sequence.
+		* When all answers are revealed press this key to begin the walk away sequence. After the first press you may press 1, 2, 3 or 4 to lock in a "guess" at what the answer would have been. Each press thereafter reveals the answer animations accordingly. DO NOT USE THE RIGHT ARROW KEY TO FINISH THIS SEQUENCE OR THE ANIMATIONS WILL BREAK.
+		  
+	*** The next four keys CANNOT be done using the numeric keypad located on the right side of the keyboard. You must use the ones located above the main letters Q W E R. ***
+	
+	1 - This key is used to lock in "A" as the final answer.
+		* When all answers have been revealed press this key to lock in "A" as the final answer.
+	
+	2 - This key is used to lock in "B" as the final answer.
+		* When all answers have been revealed press this key to lock in "B" as the final answer.
+	
+	3 - This key is used to lock in "C" as the final answer.
+		* When all answers have been revealed press this key to lock in "C" as the final answer.
+	
+	4 - This key is used to lock in "D" as the final answer.
+		* When all answers have been revealed press this key to lock in "D" as the final answer.
+		
+		
+	*** The next three keys CANNOT be performed using the optional arrow controls sometimes located on A, S, D, and W or the arrows in the numeric keypad on the right of the keyboard. You must use the arrow keys located below the "Home,End,Insert,Delete etc.." keys. ***
+	
+	Left Arrow Key - This key has a dual purpose. It is used for all animations related to fastest finger and the money tree.
+		* Press this key repeatedly for each animation. If you use the fastest finger mode, then when all fastest finger animations are done, money tree animations take over else money tree animations take over by default.
+	
+	Right Arrow Key - This key is used for all animations from the point where a question is revealed to where either the contestant loses or wins the round.
+		* Pressing this key repeatedly navigates the question and answer animations. After the fourth answer is revealed this key becomes unresponsive until either
+		key 1, 2, 3, or 4 is press to lock in anwer. Then resume pressing this key until the correct answer is revealed and hidden and any money won is revealed and hidden.
+	
+	Down Arrow Key - This key is used for showing and hiding the amount a contestant banked in the game.
+		* Either after a contestant has walked away / won a million / or got answer wrong, press this key at any time when there are no graphics currently displayed on the screen to show the banked / walk away amount and then again to hide it.
+	
+	
+	
+	

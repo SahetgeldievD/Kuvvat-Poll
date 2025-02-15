@@ -1,0 +1,58 @@
+/*************************************************/
+	IMPORTANT INFORMATION
+	
+	1) DO NOT ASK ME ABOUT RELEASING OTHER GAMES. If and when I decide to release other games, I will let the community know.
+	
+	2) This application is to be ran on a webserver such as IIS, Apache, etc... This application can possibly be run locally without the use of a web server, however, you may run into issues with what is called "Cross Site Request Origin" policies.
+	
+	3) Experience in web application development such as HTML, CSS, and jQuery/javascript are highly preferred. You do not have to know how to program or develop web applications but without such knowledge you won't be able to access the full features of this application. I will explain why later in the document titled "How to Play the Game".
+	   
+	4) DO NOT CONTACT ME ABOUT MAKING ADDITIONS OR CHANGES unless the request change is to fix a bug at which point I will determine the validity of it. This application is released as-is with no warranties. 
+	   There will be NO support provided by me but you may seek support from others as it will be open source to the public. 
+	   Once again, web developement skills is preferred but not required.
+	   
+	5) Failure to read all instructions contained in this document will be a fault of your own!!!
+/*************************************************/
+/*************************************************/
+	General Information
+	
+	1) This application works best in Chrome. It may work in Safari or other broswers but most versions have yet to catch up to par with fully run animations.
+	
+	2) This application works on the same premise as the original flash game version. Meaning that a single key is used to animate each of the available aspects of this app and that the keys used should almost be mapped the same. A complete mapping is provided in the document title "How to Play the Game".
+	
+	3) This application is made to be customizable to an extent. You may change the money amounts as well as the currency marker ($, £, etc...). You can set certain startup variables such as what question to begin on, whether or not to play a Fastest Finger, which lifelines have already been used, when the 'Switch' lifeline becomes available. BE CAREFUL WHAT YOU CHANGE. REMEMBER, IF YOU BREAK IT I'M NOT FIXING IT! In worst case scenarios where you cannot undo changes you made, you will have to re-download everything and start a new.
+	   
+	4) This application has the ability to use a USB cam input that underlays all the other graphics. You can use this do display a live video stream while playing the game from either a usb camera or some other live video stream. This app does not support more than 1 video source at a time, though it can be made to do it.
+	   
+	5) For those that have experience in web development, the script files contained within will have comments associated with them IF AND ONLY IF I think it helps describe what a section of code is doing.
+	   
+	6) The sound cues provided in this release are LIMITED! Here is what I mean:
+		* There are a total of 85 cues. Cues that do not repeat a musical pattern such as when a final answer is locked, will play out in their entirety. Other cues such as the background cues that play while a question is in progress or while rules are being explained will loop up to 4 times before they stop. You may overcome this by placing in your own cues if they are longer. CUES MUST BE NAMED THE SAME AS THEY ARE LISTED IN THE AUDIO FOLDER CASE FOR CASE!!!
+/*************************************************/
+/*************************************************/
+	F.A.Q.
+	
+	1) Does this app have fastest finger built it?
+		a) Partially, yes. The animations are built in however the methods that due the following are not yet fully implemented and must be done so by the user:
+			i) 	Get the fastest finger contestant names and locations
+			ii) 	Get the fastest finger question and answers with the correct order they should be in
+			iii)	Get the fastest finger contestants who answered correctly and their times
+			iv)	Implement the logic (copy the winners name to the fastest time strap and name/location strap) neccessary to animate through the fastest finger sequence.
+	
+	2) Can you make a super version of the app?
+		a) Yes I can make one. Will I make one? Yes. Will I release a super version? ................... nope!
+		
+	3) Why will you not release a super version?
+		a) Simply put, a super version can be created from this app but this is why I mentioned that web development skills is highly recommended. I've done most of the work for you but i'm not doing the rest. Sorry!
+		
+	4) If I discover a bug will you fix it?
+		a) That depends. As a programmer I have a different mind set when it comes to dealing with bugs. If a bug is discovered that would cause undesirable behavior then I will most likely make a fix for it. If it is something that is caused by human error, then no.
+		
+	5) I cannot get text to appear correctly or how do I get my native countries language to render on the screen.
+		a) This is a tricky one. A major problem that existed with the Flash based version of this app was that it didn't seem to work well for international audiences. This web based version should help eliminate most of those issues but if it does not, then there is not much I can do. Since I am a United States based programmer I cannot assure that you will be able to run this app without issues. Also in some countries they read from right to left. In those cases modifying the proper CSS file in the styles folder may align text properly to you specific language needs.
+		
+		
+		
+		
+		
+		
